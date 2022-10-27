@@ -1,0 +1,19 @@
+{% extends "blogs/base.html" %}
+
+{% block page_header %}
+    <div class="jumbotron">
+        <h1 class="display-3">My awesome blog.</h1>
+        <hr>
+        <h2>Join me on my journey to learn Django.</h2>
+        <hr>
+        <p class="lead">
+            This blog is my little diary. I am writing down the progress 
+            and problems encountered while writing the code.
+            
+            As a registered user, you can also create your own posts and 
+            other users can comment on them.
+        </p>
+        <a class="btn btn-lg btn-dark" href="{% url 'blogs:posts' %}"
+ role="button">See my progress &raquo;</a>
+    </div>
+{% endblock page_header %}

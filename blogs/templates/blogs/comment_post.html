@@ -1,0 +1,18 @@
+{% extends "blogs/base.html" %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+<h3> Comment post: <br> {{post.title}}|{{post.owner}} </h3>
+{% endblock page_header %}
+
+{% block content %}
+
+<form action="{% url 'blogs:comment_post' post.id %}" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+    <button name="submit" class="btn btn-dark">Add comment</button>
+    {% endbuttons %}
+    
+</form>
+{% endblock content %}

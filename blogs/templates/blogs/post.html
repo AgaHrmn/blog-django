@@ -1,0 +1,53 @@
+{% extends "blogs/base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+    <div class="card mb-3">
+        <h3 class="card-header">
+            {{post.title}} | {{post.owner}} | {{post.date_added|date:'d M Y' }}
+        </h3>
+        <div class="card-body">
+            {{ post.text|linebreaks }}
+            <br>
+            {% if post.image %}
+            <img src="{{post.image.url}}" class="img-fluid" alt="" style="vertical-align:baseline;max-height:720px">
+            <br>
+            {% endif %}
+            <hr>
+            <br>
+            <a class="btn btn-lg btn-dark btn-sm" href="{% url 'blogs:edit_post' post.id %}"
+                role="button">Edit</a> <a class="btn btn-sm btn-dark" href="{% url 'blogs:delete_post' post.id %}"
+                role="button">Delete</a>
+    </div>
+</div>
+<br>
+<br>
+    <h5 class="text-info">Comments...</h5>
+    
+        {% if not post.comments.all %} 
+            No comments... <a href="{% url 'blogs:comment_post' post.id %}" class="text-secondary">Add one!</a>
+            <br>
+            <br>
+        {% else %}
+        <br>
+        <a class="btn btn-lg btn-info btn-sm" href="{% url 'blogs:comment_post' post.id %}"
+            role="button">Add comment</a>
+        <br>
+        <br>
+        {% for comment in post.comments.all %}
+            <hr>
+            <h6 class="text-warning">{{ comment.title}} | {{comment.owner}} | {{comment.date_added}}</h6>
+            <br>
+            {{comment.text}}
+            <br>
+            <br>
+            <a class="btn btn-lg btn-dark btn-sm" href="{% url 'blogs:edit_comment' comment.id %}"
+                role="button">Edit</a>
+                <a class="btn btn-lg btn-dark btn-sm" href="{% url 'blogs:delete_comment' comment.id %}"
+                role="button">Delete</a>
+            <hr>
+            {% endfor %}
+
+        {% endif %}
+
+{% endblock content %}

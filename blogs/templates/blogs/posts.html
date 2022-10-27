@@ -1,0 +1,30 @@
+{% extends "blogs/base.html" %}
+{% load bootstrap4 %}
+
+{% block page_header %}
+<h1>Posts</h1>
+{% endblock page_header %}
+
+{% block content %}
+
+<a class="btn btn-lg btn-dark" href="{% url 'blogs:new_post' %}"
+ role="button">Add new post &raquo;</a>
+ <br>
+ <br>
+<ul>
+    {% for post in posts %}
+    <div class="card mb-3">
+        <h4 class="card-header">
+            <a href="{% url 'blogs:post' post.id %}" class="text-success">{{post.title}} | {{post.owner}}</a>
+        </h4>
+        <div class="card-body">
+            {{ post.text|linebreaks }}
+        </div>
+    </div>
+
+    {% empty %}
+        <li><h3>No posts added yet.</h3></li>
+    {% endfor %}    
+</ul>
+
+{% endblock content %}
