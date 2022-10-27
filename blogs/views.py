@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
@@ -19,7 +19,8 @@ def posts(request):
     return render(request, 'blogs/posts.html', context)
 
 def post(request, post_id):
-    post = BlogPost.objects.get(id=post_id)
+    post = get_object_or_404(BlogPost, id=post_id)
+    #post = BlogPost.objects.get(id=post_id)
     context = {'post' : post}
     return render(request, 'blogs/post.html', context)
 
@@ -47,7 +48,8 @@ def new_post(request):
 
 @login_required
 def edit_post(request, post_id):
-    post = BlogPost.objects.get(id=post_id)
+    post = get_object_or_404(BlogPost, id=post_id)
+    #post = BlogPost.objects.get(id=post_id)
     if post.owner != request.user:
         raise Http404
 
@@ -63,7 +65,8 @@ def edit_post(request, post_id):
 
 @login_required
 def delete_post(request, post_id):
-    post_to_delete = BlogPost.objects.get(id=post_id)
+    post_to_delete = get_object_or_404(BlogPost, id=post_id)
+    #post_to_delete = BlogPost.objects.get(id=post_id)
     if post_to_delete.owner != request.user:
         raise Http404
     else:
@@ -82,7 +85,8 @@ def delete_post(request, post_id):
 
 @login_required
 def comment_post(request, post_id):
-    post = BlogPost.objects.get(id=post_id)
+    post = get_object_or_404(BlogPost, id=post_id)
+    #post = BlogPost.objects.get(id=post_id)
     if request.method != 'POST':
         form = CommentForm()
     else:
@@ -98,7 +102,8 @@ def comment_post(request, post_id):
 
 @login_required
 def edit_comment(request, comment_id):
-    comment = Comment.objects.get(id=comment_id)
+    comment = get_object_or_404(Comment, id=comment_id)
+    #comment = Comment.objects.get(id=comment_id)
     post = comment.post
     if comment.owner != request.user:
         raise Http404
@@ -116,7 +121,8 @@ def edit_comment(request, comment_id):
 
 @login_required
 def delete_comment(request, comment_id):
-    comment_to_delete = Comment.objects.get(id=comment_id)
+    comment_to_delete = get_object_or_404(Comment, id=comment_id)
+    #comment_to_delete = Comment.objects.get(id=comment_id)
     post = comment_to_delete.post
     if comment_to_delete.owner != request.user:
         raise Http404
